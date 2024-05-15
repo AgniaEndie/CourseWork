@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  server:
+    build: ../Backend
+    secrets:
+      - db-password
+    environment:
+      - POSTGRES_DB=postgres
+    ports:
+      - "8080:5000"
+    volumes:
+      - eshop-storage:/var/lib/eshop/storage
+  client:
+    build: ../Frontend
+    restart: on-failure
+    ports:
+      - "4000:80"
+  db:
+    image: postgres
+    restart: always
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+volumes:
+  db-data:
+  eshop-storage:
+secrets:
+  db-password:
+    file: db/password.txt
