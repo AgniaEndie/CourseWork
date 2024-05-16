@@ -26,6 +26,8 @@ authController = AuthController()
 app.add_url_rule('/auth/authentication', view_func=authController.authentication, methods=["GET"])
 app.add_url_rule('/auth/registry', view_func=authController.registry, methods=["POST"])
 app.add_url_rule('/auth/login', view_func=authController.login, methods=["POST"])
+app.add_url_rule('/users/all', view_func=authController.all, methods=["GET"])
+app.add_url_rule('/users/remove/<code>', view_func=authController.remove, methods=["DELETE"])
 
 cartController = CartController()
 app.add_url_rule('/cart/add', view_func=cartController.add_to_cart, methods=["POST"])

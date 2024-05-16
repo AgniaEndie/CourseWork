@@ -95,3 +95,36 @@ def authenticate(token):
     except Exception as e:
         logging.error(e)
         return False
+
+
+def all():
+    try:
+        db = DatabaseConnect()
+        conn = db.conn()
+        cursor = conn.cursor()
+        cursor.execute("select name,email,role,uuid from users")
+        raw_data = cursor.fetchall()
+        result = []
+        for elem in raw_data:
+            obj = {
+                "name": elem[0],
+                "email": elem[1],
+                "role": elem[2],
+                "uuid": elem[3]
+            }
+            result.append(obj)
+        return Response(json.dumps(result), 200, content_type="application/json")
+    except Exception as e:
+        return Response('{"message":"error"}', 500)
+
+
+def remove(code):
+    try:
+        db = DatabaseConnect()
+        conn = db.conn()
+        cursor = conn.cursor()
+        cursor.execute(f"delete from users where uuid ='{code}'")
+        conn.commit()
+        return Response('{"message":"ok"}', 200, content_type="application/json")
+    except Exception as e:
+        return Response('{"message":"error"}', 500, content_type="application/json")

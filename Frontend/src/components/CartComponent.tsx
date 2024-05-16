@@ -28,9 +28,14 @@ export function CartComponent() {
     }, [doUpdate]);
 
 
-    const [totalCount, setTotalCount] = useState(1)
-    const handleSetTotalCount = (item: any) => {
-        setTotalCount(totalCount + item)
+
+
+
+    const [totalCount, setTotalCount] = useState(0)
+    const handleSetTotalCount = (item: any, isMinus:boolean) => {
+        console.error(isMinus)
+        console.error(item)
+        setTotalCount(item)
     }
 
     const renderedList = carts.map((elem) => {

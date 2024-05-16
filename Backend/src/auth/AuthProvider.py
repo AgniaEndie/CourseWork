@@ -43,3 +43,17 @@ def authenticate():
     except Exception as e:
         logging.error(e)
         return False
+
+
+def all():
+    try:
+        return AuthService.all()
+    except Exception as e:
+        return Response('{"message":"error"}', 500)
+
+
+def remove(code):
+    try:
+        return AuthService.remove(code)
+    except Exception as e:
+        return Response('{"message":"error"}', 500)

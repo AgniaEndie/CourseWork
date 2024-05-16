@@ -6,7 +6,8 @@ const instance = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
         "Content-type": "application/json",
-        "Authorization": `Bearer ${getAccessToken()}`
+        "Authorization": `Bearer ${getAccessToken()}`,
+        'Access-Control-Allow-Origin': '*'
     }
 });
 
@@ -111,5 +112,54 @@ export function updateCart(data:any,handleCart:any){
         handleCart(1)
     }).catch((e)=>{
         console.log(e)
+    })
+}
+
+export function adminGetAllUsers (handleUsers:any){
+    instance.get("/users/all").then((response)=>{
+        handleUsers(response.data)
+    }).catch((e)=>{
+        console.log(e)
+    })
+}
+
+export function removeUsers(code:any,handleSuccess:any){
+    instance.delete(`/users/remove/${code}`).then((response)=>{
+        if(response.status == 200){
+            handleSuccess(true)
+        }
+    })
+}
+
+export function createCategory(data:any, handleSuccess:any){
+    let upd = {
+        "title": data
+    }
+
+    instance.post('/category/create',upd).then((response => {
+        if(response.status == 200){
+            handleSuccess(false)
+        }
+    }))
+}
+
+export function removeCategory(code:any, handleSuccess:any){
+    instance.delete(`/category/delete/${code}`).then((response)=>{
+        if(response.status == 200){
+            handleSuccess(true)
+        }
+    })
+}
+
+export function createProduct(data:any, handleSuccess:any) {
+    instance.post('/product/create',data).then((response)=>{
+        handleSuccess(false)
+    })
+}
+export function removeProduct(code:any, handleSuccess:any){
+    instance.delete(`/product/delete/${code}`).then((response)=>{
+        if(response.status == 200){
+            handleSuccess(true)
+        }
     })
 }

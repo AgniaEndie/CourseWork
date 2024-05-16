@@ -21,5 +21,13 @@ type Cart = {
     "uuid":string,
     "user_id":string,
     "product_id":string,
-    "count":number
+    "count":number,
+    "cost":number
+}
+
+type AdminUser ={
+    "name":string,
+    "email":string,
+    "role":string,
+    "uuid":string
 }
